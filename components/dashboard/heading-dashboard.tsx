@@ -9,7 +9,6 @@ export const HeadingDashboard = () => {
         <p className="text-sm text-zinc-500 mb-4">Here is a list of all registered organizations:</p>
       </div>
 
-
       <Button asChild>
         <Link href='dashboard/orgs/create' className="flex items-center gap-2">
           <PlusIcon />

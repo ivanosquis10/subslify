@@ -6,10 +6,10 @@ export const SignOutButton = () => {
   const handleSignOut = async () => {
     'use server'
     const cookieStore = cookies()
-    const supabase = createClient( cookieStore )
+    const supabase = createClient(cookieStore)
 
     await supabase.auth.signOut()
-    return redirect( '/login' )
+    return redirect('/login')
   }
   return (
     <form action={ handleSignOut }>

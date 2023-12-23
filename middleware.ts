@@ -1,34 +1,31 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createClient } from '@/utils/supabase/middleware'
 
-export async function middleware(request: NextRequest) {
+export async function middleware (request: NextRequest) {
   try {
     const { supabase, response } = createClient(request)
-    // const { data } = await supabase.auth.getSession()
+    const { data } = await supabase.auth.getSession()
 
-    // console.log(data)
-    
-    // if(data.session === null) {
-    //   return NextResponse.redirect(new URL('/login', request.url))
-    // }
+    // Si el usuario ya tiene una sesión y está intentando acceder a /login, redirige a /dashboard
+    if (data.session !== null && request.nextUrl.pathname === '/login') {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
 
-    // Proteger la ruta del login, en caso de que haya una sesion activa, llevar al dashboard
-    // if( request.nextUrl.pathname === '/login' && data.session !== null ) {
-    //   return NextResponse.redirect(new URL('/dashboard', request.url))
-    // }
-
+    // Si el usuario no tiene una sesión y está intentando acceder a una ruta protegida, redirige a /login
+    if (!data.session && request.nextUrl.pathname.startsWith('/dashboard')) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
 
     return response
   } catch (e) {
     return NextResponse.next({
       request: {
-        headers: request.headers,
-      },
+        headers: request.headers
+      }
     })
   }
 }
 
-
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/dashboard/:path*', '/login']
 }

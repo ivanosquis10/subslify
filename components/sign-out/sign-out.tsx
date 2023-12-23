@@ -9,14 +9,14 @@ export const SignOut = () => {
   const handleSignOut = async () => {
     'use server'
     const cookieStore = cookies()
-    const supabase = createClient( cookieStore )
+    const supabase = createClient(cookieStore)
 
     await supabase.auth.signOut()
-    return redirect( '/login' )
+    return redirect('/login')
   }
   return (
-    <form action={ handleSignOut }>
-      <Button className="w-full">
+    <form action={handleSignOut}>
+      <Button className="w-full" variant='ghost'>
         <LogOutIcon className="h-4 w-4 mr-2" />
         Logout
       </Button>
