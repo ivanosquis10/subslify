@@ -3,6 +3,7 @@ import { OrganizationItem } from '@/components/dashboard/organization/organizati
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 // interface Org {
 //   id: string
@@ -29,16 +30,22 @@ export default async function Page () {
     <main className="flex flex-col flex-1 gap-4 p-4 md:gap-8 md:p-6">
       <div className="flex flex-col w-full">
         <HeadingDashboard />
-        <div className="grid w-full gap-3 md:grid-cols-2 xl:grid-cols-3">
-          {
-            organizations?.map((org) => (
-              <OrganizationItem key={org.id}
-                organization={org}
-              />
-            ))
-          }
-        </div>
+        <Suspense fallback={<div>Loading...</div>} >
+          <OrganizationsWrapper orgs={organizations} />
+        </Suspense>
       </div>
     </main>
+  )
+}
+
+const OrganizationsWrapper = ({ orgs }: { orgs: any }) => {
+  return (
+    <div className="grid w-full gap-3 md:grid-cols-2 xl:grid-cols-3">
+      {orgs.map((org: any) => (
+        <OrganizationItem key={org.id}
+          organization={org}
+        />
+      ))}
+    </div>
   )
 }

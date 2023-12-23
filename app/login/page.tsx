@@ -1,6 +1,6 @@
 'use client'
 
-import { useTransition } from 'react'
+// import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 
@@ -8,6 +8,8 @@ import { GithubIcon, GoogleIcon } from '@/components/icons/icons'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader } from '@/components/ui/card'
 import Link from 'next/link'
+
+const URL = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:3000'
 
 export default function LoginGoogle () {
   // const [isPending, startTransition] = useTransition()
@@ -19,7 +21,7 @@ export default function LoginGoogle () {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${location.origin}/auth/callback`
+          redirectTo: `${URL}/auth/callback`
         }
       })
 
