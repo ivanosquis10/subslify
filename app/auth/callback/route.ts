@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server'
 
 // esto es una opción de Next.js, para evitar que cachee de forma
 // estática la ruta, y que siempre se ejecute en el servidor
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 export async function GET (request: Request) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')

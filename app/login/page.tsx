@@ -8,20 +8,20 @@ import { GithubIcon, GoogleIcon } from '@/components/icons/icons'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader } from '@/components/ui/card'
 import Link from 'next/link'
-
-const URL = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:3000'
+import { getURL } from '@/lib/utils'
 
 export default function LoginGoogle () {
   // const [isPending, startTransition] = useTransition()
   const supabase = createClient()
   const router = useRouter()
 
+  console.log(getURL())
   const handleSignIn = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${URL}/auth/callback`
+          redirectTo: `${getURL()}/auth/callback`
         }
       })
 
@@ -30,8 +30,7 @@ export default function LoginGoogle () {
         return
       }
 
-      // redireccion al login
-      router.push('/dashboard')
+      router.refresh()
     } catch (error) {
       console.log('Error with Google login:', error)
     }
