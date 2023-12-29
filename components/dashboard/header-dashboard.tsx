@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getUserSession } from '@/actions'
+import { getUserSession } from '@/actions/user'
 import { ToggleTheme } from '@/components/shared/toggle-theme/toggle-theme'
 import { UserInfo } from '@/components/dashboard/user-info'
 
