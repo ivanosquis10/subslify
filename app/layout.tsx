@@ -1,6 +1,7 @@
 import './globals.css'
-import { GeistSans as geist } from 'geist/font/sans'
-import { ThemeProvider } from '@/components/providers/theme-providers'
+// import { GeistSans as geist } from 'geist/font/sans'
+import { onest } from '@/fonts'
+import { ThemeProvider } from '@/components/shared/providers/theme-providers'
 import { Toaster } from '@/components/ui/toaster'
 
 const defaultUrl = process.env.VERCEL_URL
@@ -19,7 +20,7 @@ export default function RootLayout ({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={geist.className}>
+    <html lang="en" className={onest.className}>
       <body >
         <ThemeProvider
           attribute="class"
@@ -27,9 +28,9 @@ export default function RootLayout ({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex flex-col items-center min-h-screen">
-            <Toaster />
+          <main className="flex flex-col items-center overflow-hidden">
             {children}
+            <Toaster />
           </main>
         </ThemeProvider>
       </body>
