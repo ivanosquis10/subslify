@@ -1,18 +1,9 @@
 import Link from 'next/link'
-import { getUserSession } from '@/actions/user'
 import { ToggleTheme } from '@/components/shared/toggle-theme/toggle-theme'
-import { UserInfo } from '@/components/dashboard/user-info'
 
-export const HeaderDashboard = async () => {
-  const session = await getUserSession()
-
-  const user = {
-    email: session?.user.email,
-    photo: session?.user.user_metadata.avatar_url
-  }
-
+export const Header = () => {
   return (
-    <header className="flex flex-col md:flex-row lg:h-[60px] items-center md:p-6 p-4 border-b w-full gap-2 lg:gap-5 dark:bg-zinc-900 bg-white">
+    <header className="flex flex-col md:flex-row lg:h-[60px] items-center md:p-6 p-4 border-b w-full gap-2 lg:gap-5 backdrop-blur-sm bg-transparent">
       <nav className="relative flex items-center justify-between flex-1 w-full gap-4">
         <Link className="text-lg font-semibold" href="/dashboard">
           Subslify
@@ -22,7 +13,9 @@ export const HeaderDashboard = async () => {
             <ToggleTheme />
           </li>
           <li>
-            <UserInfo user={user} />
+            <Link href='/login'>
+              Login
+            </Link>
           </li>
         </ul>
       </nav>

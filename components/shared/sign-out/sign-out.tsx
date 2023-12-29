@@ -2,10 +2,11 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 
-import { LogOutIcon } from '../icons/icons'
-import { Button } from '../ui/button'
+import { LogOutIcon } from '@/components/icons/icons'
+import { Button } from '@/components/ui/button'
 
 export const SignOut = () => {
+  // Todo: mover a un server action
   const handleSignOut = async () => {
     'use server'
     const cookieStore = cookies()

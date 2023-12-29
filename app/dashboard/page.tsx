@@ -1,51 +1,23 @@
-import { HeadingDashboard } from '@/components/dashboard/heading-dashboard'
-import { OrganizationItem } from '@/components/dashboard/organization/organization-item'
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
+// import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
-import { Suspense } from 'react'
-
-// interface Org {
-//   id: string
-//   title: string
-//   description: string
-// }
+import { getUserSession } from '@/actions/user'
+import { HeadingDashboard } from '@/components/dashboard/heading-dashboard'
+// import { OrganizationsWrapper } from '@/components/dashboard/organization/organization-wrapper'
+// import { DashboardSkeleton } from '@/components/shared/skeletons/dashboard-skeleton'
 
 export default async function Page () {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const session = await getUserSession()
 
-  const { data: { session } } = await supabase.auth.getSession()
-
-  if (!session) {
-    return redirect('/login')
-  }
-
-  const { data: organizations } = await supabase
-    .from('organizations')
-    .select('*')
-    .eq('user_id', session.user.id)
+  if (!session) redirect('/login')
 
   return (
     <main className="flex flex-col flex-1 gap-4 p-4 md:gap-8 md:p-6">
       <div className="flex flex-col w-full">
         <HeadingDashboard />
-        <Suspense fallback={<div>Loading...</div>} >
-          <OrganizationsWrapper orgs={organizations} />
-        </Suspense>
+        {/* <Suspense fallback={<DashboardSkeleton />} >
+          <OrganizationsWrapper id={session.user.id} />
+        </Suspense> */}
       </div>
     </main>
-  )
-}
-
-const OrganizationsWrapper = ({ orgs }: { orgs: any }) => {
-  return (
-    <div className="grid w-full gap-3 md:grid-cols-2 xl:grid-cols-3">
-      {orgs.map((org: any) => (
-        <OrganizationItem key={org.id}
-          organization={org}
-        />
-      ))}
-    </div>
   )
 }
