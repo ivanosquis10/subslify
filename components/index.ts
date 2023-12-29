@@ -1,4 +1,4 @@
-export * from './toggle-theme/toggle-theme'
+export * from './shared/toggle-theme/toggle-theme'
 
 // Dashboard
 // export * from './dashboard/aside'
