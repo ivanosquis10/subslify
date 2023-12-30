@@ -33,6 +33,8 @@
     --ring: 240 10% 3.9%;
 
     --radius: 0.5rem;
+
+    --uib-color: black;
   }
 
   .dark {
@@ -63,6 +65,8 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+
+    --uib-color: white;
   }
 }
 
@@ -72,7 +76,7 @@
   }
 
   body {
-    @apply bg-background text-foreground dark:bg-zinc-900;
+    @apply bg-slate-100 text-foreground dark:bg-zinc-900;
   }
 }
 

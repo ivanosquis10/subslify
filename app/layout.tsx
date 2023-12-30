@@ -29,6 +29,7 @@ export default function RootLayout ({
           disableTransitionOnChange
         >
           <main className="flex flex-col items-center overflow-hidden">
+            <div className="absolute inset-0 bg-grid-zinc-900/20 dark:bg-grid-white/5 bg-grid-10 -z-10 h-full" />
             {children}
             <Toaster />
           </main>
