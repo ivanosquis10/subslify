@@ -11,3 +11,14 @@ export const getUserSession = async () => {
 
   return session
 }
+
+export const signOutSession = async () => {
+  try {
+    const cookieStore = cookies()
+    const supabase = createClient(cookieStore)
+
+    await supabase.auth.signOut()
+  } catch (error) {
+    console.log(error)
+  }
+}
