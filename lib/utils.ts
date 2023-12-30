@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { format, differenceInDays } from 'date-fns'
 
 export function cn (...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -30,7 +31,7 @@ export const handleError = (error: unknown) => {
   throw new Error(typeof error === 'string' ? error : JSON.stringify(error))
 }
 
-export function calculateDaysRemaining (fechaInicio: string, fechaFin: string, count?: boolean) {
+export function calculateDaysRemaining (fechaInicio: string | Date, fechaFin: string | Date, count?: boolean) {
   // Convertir las fechas a objetos Date si no lo están
   const startDate = new Date(fechaInicio)
   const endDate = new Date(fechaFin)
@@ -50,4 +51,19 @@ export function calculateDaysRemaining (fechaInicio: string, fechaFin: string, c
   }
 
   return `${daysLefts} days left...`
+}
+
+export const formatDate = (date: string | Date) => {
+  const newDate = new Date(date)
+  return format(newDate, 'MM/dd/yyyy')
+}
+
+export const calculateDate = (startDate: string | Date, endDate: string | Date) => {
+  const daysRemainign = differenceInDays(new Date(endDate), new Date(startDate))
+
+  if (daysRemainign < 0) {
+    return 'Expired'
+  }
+
+  return `${daysRemainign} days left...`
 }
