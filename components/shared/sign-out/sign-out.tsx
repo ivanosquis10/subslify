@@ -1,26 +1,21 @@
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
+'use client'
 
+import { useRouter } from 'next/navigation'
+import { signOutSession } from '@/actions'
 import { LogOutIcon } from '@/components/icons/icons'
 import { Button } from '@/components/ui/button'
 
 export const SignOut = () => {
-  // Todo: mover a un server action
-  const handleSignOut = async () => {
-    'use server'
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+  const router = useRouter()
 
-    await supabase.auth.signOut()
-    return redirect('/login')
+  const handleSignOut = async () => {
+    await signOutSession()
+    router.replace('/login')
   }
   return (
-    <form action={handleSignOut}>
-      <Button className="w-full" variant='ghost'>
-        <LogOutIcon className="h-4 w-4 mr-2" />
-        Logout
-      </Button>
-    </form>
+    <Button onClick={handleSignOut} className="w-full" variant='ghost'>
+      <LogOutIcon className="h-4 w-4 mr-2" />
+      Logout
+    </Button>
   )
 }

@@ -1,13 +1,13 @@
 'use client'
 
 // import { useTransition } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 
 import { GithubIcon, GoogleIcon } from '@/components/icons/icons'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader } from '@/components/ui/card'
-import Link from 'next/link'
 import { getURL } from '@/lib/utils'
 
 export default function LoginGoogle () {
@@ -15,19 +15,17 @@ export default function LoginGoogle () {
   const supabase = createClient()
   const router = useRouter()
 
-  console.log(getURL())
   const handleSignIn = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${getURL()}/auth/callback`
+          redirectTo: `${getURL()}auth/callback`
         }
       })
 
       if (error) {
         console.error('Error en la autenticación con Google:', error)
-        return
       }
 
       router.refresh()
@@ -39,7 +37,7 @@ export default function LoginGoogle () {
   return (
     <section>
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+        <div className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt="Night"
             src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
@@ -63,10 +61,10 @@ export default function LoginGoogle () {
               quibusdam aperiam voluptatum.
             </p>
           </div>
-        </section>
+        </div>
 
         <main
-          className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
+          className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6 backdrop-blur-md"
         >
           <div className="max-w-xl lg:max-w-7xl w-full">
             <div className="relative -mt-16 block lg:hidden">

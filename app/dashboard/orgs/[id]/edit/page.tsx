@@ -1,17 +1,11 @@
-import { createOrg, editOrg, getOrgById } from '@/actions/organizations'
+import { getOrgById } from '@/actions/organizations'
 import { EditForm } from '@/components/dashboard/organization/edit-form'
 
-interface Org {
-  id: string
-  title: string
-  description: string
-}
-
 export default async function Page ({ params: { id } }: { params: { id: string } }) {
-  const { data } = await getOrgById(id)
+  const data = await getOrgById(id)
   return (
-    <section>
-      <div className="p-4 md:p-6 max-w-2xl mx-auto mt-10 border shadow dark:bg-zinc-950/40 rounded-lg">
+    <section className='px-2 md:px-0'>
+      <div className="p-4 md:p-6 max-w-2xl mx-auto mt-10 border shadow dark:bg-zinc-950/40 rounded-lg backdrop-blur-sm">
 
         <header className="text-center mb-10 mx-auto">
           <h2 className="text-3xl font-bold">Edit Organization</h2>

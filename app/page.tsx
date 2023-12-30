@@ -9,7 +9,7 @@ export default function Page () {
       <Header />
 
       <section className="px-4 w-full grid place-content-center min-h-[90svh]">
-        <div className="absolute inset-0 bg-grid-zinc-500/50 dark:bg-grid-white/5 bg-grid-12 -z-10 h-full" />
+        {/* <div className="absolute inset-0 bg-grid-zinc-500/50 dark:bg-grid-white/5 bg-grid-12 -z-10 h-full" /> */}
 
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="mt-8 font-extrabold lg:text-5xl text-4xl tracking-tight leading-10 text-pretty">
