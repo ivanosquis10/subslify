@@ -24,8 +24,8 @@ export const OrganizationActions = ({ id }: { id: string }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link className='flex items-center gap-1 cursor-pointer' href={`/dashboard/orgs/${id}`} >
+        <DropdownMenuItem asChild>
+          <Link className='w-full flex items-center gap-1 cursor-pointer' href={`/dashboard/orgs/${id}`} >
             <EyeIcon className="w-4 h-4" />
             <span>View</span>
           </Link>

@@ -89,7 +89,7 @@ export default function LoginGoogle () {
               <CardHeader className="space-y-3">
                 <h2 className="text-2xl font-bold text-center mb-5">Starts with</h2>
                 <Button
-                  // onClick={handleSignIn}
+                  onClick={handleSignIn}
                   className="w-full flex items-center gap-3 font-bold"
                 >
                   <GoogleIcon />
