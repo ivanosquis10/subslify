@@ -1,8 +1,8 @@
 import './globals.css'
-// import { GeistSans as geist } from 'geist/font/sans'
-import { onest } from '@/fonts'
+
 import { ThemeProvider } from '@/components/shared/providers/theme-providers'
 import { Toaster } from '@/components/ui/toaster'
+import { onest } from '@/fonts'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
