@@ -38,7 +38,7 @@ export const getSubs = async (orgId: string): Promise<GetSubsResponse> => {
         return { organization: null, subs: [], error }
       }
 
-      const sortedSubs = data.subs.toSorted((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime()) as Sub[]
+      const sortedSubs = data.subs.sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime()) as Sub[]
 
       return { organization: data.title, subs: sortedSubs, error: null }
   } catch (error) {
