@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 'use server'
 
 import { cookies } from 'next/headers'
@@ -11,18 +12,38 @@ interface CreateProps {
   endDate: Date | string
 }
 
-export const getSubs = async (orgId: string) => {
+interface GetSubsResponse {
+  organization: string | null
+  subs: Sub[]
+  error: any
+}
+
+export const getSubs = async (orgId: string): Promise<GetSubsResponse> => {
   try {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
+    const currentDate = new Date().toISOString()
 
-    const { data, error } = await supabase.from('subs').select().eq('organization_id', orgId)
+    const { data, error } = await supabase.from('organizations')
+      .select(`
+        title,
+        subs (id, title, start_date, end_date, organization_id)
+      `)
+      .eq('id', orgId)
+      .gte('subs.end_date', currentDate)
+      .single()
 
-    const subs = data as Sub[] | null
+      if (error) {
+        console.error(error)
+        return { organization: null, subs: [], error }
+      }
 
-    return { subs, error }
+      const sortedSubs = data.subs.sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime()) as Sub[]
+
+      return { organization: data.title, subs: sortedSubs, error: null }
   } catch (error) {
     console.log(error)
+    return { organization: null, subs: [], error }
   }
 }
 
