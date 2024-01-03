@@ -24,7 +24,7 @@ export const SubActions = ({ id }: { id: string }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild disabled>
           <Link className='flex items-center gap-1 cursor-pointer' href={`/dashboard/orgs/${id}/edit`} >
             <PencilIcon className="w-4 h-4" />
             <span>Edit</span>
