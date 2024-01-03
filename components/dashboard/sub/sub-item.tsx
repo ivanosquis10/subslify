@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { SubActions } from './sub-actions'
-import { calculateDate, formatDate } from '@/lib/utils'
+import { calculateDate, cn, formatDate } from '@/lib/utils'
 import type { Sub } from '@/types'
 
 type Props = {
@@ -8,15 +8,16 @@ type Props = {
 }
 export const SubItem = ({ data }: Props) => {
   const today = new Date()
+  const isExpired = Number(calculateDate(today, data.end_date, true)) < 0
+
   return (
     <Card
       className="relative block overflow-hidden dark:bg-zinc-950/50 backdrop-blur-sm border-[1.5px] shadow-lg p-2" >
-
       <CardHeader className="sm:flex sm:flex-row sm:gap-4 py-0 px-4 sm:items-center justify-between space-y-0">
         <CardTitle className="text-sm sm:text-lg capitalize font-medium">
           {data.title}
         </CardTitle>
-        <span className='text-sm tracking-wide dark:text-zinc-400'>
+        <span className={cn('text-sm tracking-wide dark:text-zinc-400', { 'text-rose-500 dark:text-rose-500 font-bold': isExpired })}>
           {calculateDate(today, data.end_date)}
         </span>
       </CardHeader>

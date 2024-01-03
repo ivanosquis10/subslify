@@ -4,27 +4,25 @@
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
-import type { Sub } from '@/types'
+import type { GetSubsResponse, Sub, CreateProps } from '@/types'
 
-interface CreateProps {
-  title: string
-  startDate: Date | string
-  endDate: Date | string
-}
+/**
+ * Retrieves the subscriptions for a given organization.
+ *
+ * @param {string} orgId - The ID of the organization.
+ * @param {boolean} expired - Optional. If true, retrieves expired subscriptions. Otherwise, retrieves non-expired subscriptions.
+ * @return {Promise<GetSubsResponse>} A Promise that resolves to an object containing the organization title, an array of sorted subscriptions, and error information.
+ */
 
-interface GetSubsResponse {
-  organization: string | null
-  subs: Sub[]
-  error: any
-}
-
-export const getSubs = async (orgId: string): Promise<GetSubsResponse> => {
+export const getSubs = async (orgId: string, expired?: boolean): Promise<GetSubsResponse> => {
   try {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
     const currentDate = new Date().toISOString()
 
-    const { data, error } = await supabase.from('organizations')
+    // trae las suscripciones que NO estan expiradas
+    if (!expired) {
+      const { data, error } = await supabase.from('organizations')
       .select(`
         title,
         subs (id, title, start_date, end_date, organization_id)
@@ -41,9 +39,30 @@ export const getSubs = async (orgId: string): Promise<GetSubsResponse> => {
       const sortedSubs = data.subs.sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime()) as Sub[]
 
       return { organization: data.title, subs: sortedSubs, error: null }
+    }
+
+    // trae las suscripciones que estan expiradas
+    const { data, error } = await supabase.from('organizations')
+      .select(`
+        title,
+        subs (id, title, start_date, end_date, organization_id)
+      `)
+      .eq('id', orgId)
+      .lte('subs.end_date', currentDate)
+      // .gte('subs.end_date', currentDate)
+      .single()
+
+      if (error) {
+        console.error(error)
+        return { organization: null, subs: [], error }
+      }
+
+      const sortedSubs = data.subs.sort((a, b) => new Date(a.end_date).getTime() - new Date(b.end_date).getTime()) as Sub[]
+
+      return { organization: data.title, subs: sortedSubs, error: null }
   } catch (error) {
-    console.log(error)
-    return { organization: null, subs: [], error }
+      console.log(error)
+      return { organization: null, subs: [], error }
   }
 }
 
