@@ -15,3 +15,15 @@ export type Sub = {
   organization_id: string
   end_date: string
 }
+
+export interface CreateProps {
+  title: string
+  startDate: Date | string
+  endDate: Date | string
+}
+
+export interface GetSubsResponse {
+  organization: string | null
+  subs: Sub[]
+  error: any
+}

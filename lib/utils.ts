@@ -58,8 +58,12 @@ export const formatDate = (date: string | Date) => {
   return format(newDate, 'MM/dd/yyyy')
 }
 
-export const calculateDate = (startDate: string | Date, endDate: string | Date) => {
+export const calculateDate = (startDate: string | Date, endDate: string | Date, count?: boolean) => {
   const daysRemainign = differenceInDays(new Date(endDate), new Date(startDate))
+
+  if (count) {
+    return daysRemainign
+  }
 
   if (daysRemainign < 0) {
     return 'Expired'
